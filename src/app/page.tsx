@@ -98,7 +98,7 @@ export default function Home() {
         {/* BANNER SECTION */}
         <div className='col-span-1 flex flex-col justify-center items-start'>
           <div className='bg-black px-10 py-10 rounded-full'></div>
-          <h1 className='text-5xl font-bold mt-3'>Hello! I'm Defryan</h1>
+          <h1 className='text-5xl font-bold mt-3'>Hello! I am Defryan</h1>
           <h1 className='text-5xl font-bold mt-3'>Isfandy</h1>
         </div>
         <div className='col-span-1 flex flex-col justify-center items-start'>
@@ -276,7 +276,7 @@ export default function Home() {
                   />
                 </div>
                 <p className='text-gray-700 italic mb-4'>
-                  "{testimonials[currentIndex].message}"
+                  {testimonials[currentIndex].message}
                 </p>
                 <h4 className='font-semibold text-gray-900'>
                   {testimonials[currentIndex].name}
@@ -355,7 +355,7 @@ export default function Home() {
           <div className='col-span-1'>
             <h1 className='text-2xl font-bold text-gray-800'>Contact Us!</h1>
             <h1 className='text-4xl mt-3 italic text-gray-900'>
-              Let's Talk for
+              Lets Talk for
             </h1>
             <h1 className='text-4xl font-bold'>Your Next Project!</h1>
 
