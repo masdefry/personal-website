@@ -1,10 +1,46 @@
-import Image from 'next/image';
+'use client';
+
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Link from 'next/link';
-import { posts } from '../../utils/data';
+type Post = {
+  objectId: string;
+  title: string;
+  slug: string;
+  imageUrl: string;
+  created: string;
+  author: string;
+  content: string;
+};
 
 export default function BlogPage() {
+  const [posts, setPosts] = useState<Post[]>([]);
+const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get<{ data: Post[] }>('/api/posts');
+      
+        setPosts(response.data.data);
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  if (loading)
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className='w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin'></div>
+      </div>
+    );
+
   return (
-    <section className='container mx-auto px-10 md:px-32 py-24'>
+    <section className='container mx-auto px-10 md:px-32 py-24 min-h-screen'>
       {/* HEADER SECTION */}
       <section className='grid grid-cols-1 grid-rows-3 md:grid-cols-3 grid-rows-2 pt-10 pb-1'>
         <h1 className='col-span-3 md:col-span-2 text-4xl font-bold text-gray-900 text-center md:text-left'>
@@ -20,30 +56,26 @@ export default function BlogPage() {
             here.
           </Link>
         </p>
-        <div className='col-span-1 flex justify-center mt-5 md:mt-1 border border-gray-300 rounded-full flex items-center p-3 w-full md:w-fit'>
+        <div className='col-span-1 flex justify-between mt-5 md:mt-3 border border-gray-300 rounded-full flex items-center w-full md:w-fit'>
           <input
             type='text'
             placeholder='Enter your email'
-            className='focus:outline-none focus:ring-0 focus:border-transparent'
+            className='px-3 focus:outline-none focus:ring-0 focus:border-transparent'
           />
-          <button className='btn bg-black text-white px-4 py-2 ml-2 rounded-full'>
+          <button className='btn bg-black text-white rounded-full'>
             Subscribe Now →
           </button>
         </div>
       </section>
 
-      {/* BLOG POST LIST SECTION */}
       <section className='grid gap-8 mt-10 md:mt-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {posts.map((post) => (
           <Link
             href={`/blog/${post.slug}`}
-            key={post.id}
+            key={post.objectId}
           >
-            <div
-              key={post.id}
-              className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all h-full flex flex-col'
-            >
-              <Image
+            <div className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all h-full flex flex-col'>
+              <img
                 src={post.imageUrl}
                 alt={post.title}
                 width={400}
@@ -52,14 +84,15 @@ export default function BlogPage() {
               />
               <div className='p-5 flex flex-col flex-grow'>
                 <p className='text-sm text-gray-500'>
-                  {post.date} • {post.author}
+                  {new Date(post.created).toLocaleDateString()} • {post.author}
                 </p>
                 <h2 className='text-xl font-semibold text-gray-800 mt-2'>
                   {post.title}
                 </h2>
-                <p className='text-gray-600 mt-2 flex-grow'>
-                  {post.description}
-                </p>
+                <div
+                  className='text-gray-600 mt-2 flex-grow prose'
+                  dangerouslySetInnerHTML={{ __html: post.content }}
+                />
                 <button className='mt-4 text-blue-600 hover:underline'>
                   Read More →
                 </button>

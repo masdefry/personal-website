@@ -1,36 +1,56 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { PiArrowLeft } from 'react-icons/pi';
-import { posts } from '../../../utils/data';
+import axios from 'axios';
+
+interface BlogPost {
+  objectId: string;
+  slug: string;
+  title: string;
+  description: string;
+  content: string;
+  imageUrl: string;
+  created: string;
+  author: string;
+}
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
-  const pathname = usePathname();
-  const pathSegments = pathname.split('/').filter((segment) => segment);
-
-  const [blog, setBlog] = useState<{
-    id: number;
-    slug: string;
-    title: string;
-    description: string;
-    content: string;
-    imageUrl: string;
-    date: string;
-    author: string;
-  } | null | undefined>(null);
+  const [blog, setBlog] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const foundBlog = posts.find((post) => post.slug === slug);
-    setBlog(foundBlog);
+    const fetchBlogPost = async () => {
+      try {
+        const response = await axios.get(`/api/posts/${slug}`);
+        setBlog(response.data.data[0]);
+      } catch (err) {
+        setError('Failed to fetch blog post.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchBlogPost();
+    }
   }, [slug]);
 
-  if (!blog) {
+  if (loading) {
     return (
-      <section className='container flex flex-col justify-center mx-auto px-10 md:px-32 py-24 text-center'>
+      <section className='container min-h-screen flex flex-col justify-center items-center'>
+        <div className='w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin'></div>
+      </section>
+    );
+  }
+
+  if (error || !blog) {
+    return (
+      <section className='container min-h-screen flex flex-col justify-center mx-auto px-10 md:px-32 py-24 text-center'>
         <h2 className='text-2xl font-bold'>Blog not found</h2>
         <p className='text-gray-500'>
           The blog you are looking for does not exist.
@@ -50,53 +70,24 @@ export default function BlogDetailPage() {
     );
   }
 
-  const formattedDate = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(new Date(blog.date));
+  const formattedDate = blog.created
+    ? new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(new Date(blog.created))
+    : 'Unknown Date';
 
   return (
     <section className='container mx-auto px-10 md:px-32 py-24'>
-      {/* BREADCRUMBS SECTION */}
-      <nav className='text-sm text-gray-500 mb-5'>
-        <ul className='flex gap-2'>
-          <li>
-            <Link
-              href='/'
-              className='hover:text-black'
-            >
-              Home
-            </Link>
-          </li>
-          {pathSegments.map((segment, index) => {
-            const url = `/${pathSegments.slice(0, index + 1).join('/')}`;
-            const isLast = index === pathSegments.length - 1;
-            return (
-              <span
-                key={url}
-                className='flex items-center gap-2'
-              >
-                <span>/</span>
-                {isLast ? (
-                  <span className='text-black font-medium'>
-                    {decodeURIComponent(segment)}
-                  </span>
-                ) : (
-                  <Link
-                    href={url}
-                    className='hover:text-black'
-                  >
-                    {decodeURIComponent(segment)}
-                  </Link>
-                )}
-              </span>
-            );
-          })}
-        </ul>
-      </nav>
+      {/* BACK BUTTON SECTION */}
+      <button
+        onClick={() => window.history.back()}
+        className='cursor-pointer flex items-center gap-2 border border-black text-gray-600 hover:text-white hover:border-black hover:bg-black mb-4 rounded-full p-2'
+      >
+        <PiArrowLeft size={20} />
+      </button>
 
-      {/* BLOG DETAIL SECTION */}
       {/* BLOG DETAIL SECTION */}
       <section className='min-h-screen'>
         <h1 className='text-4xl font-bold mb-4'>{blog.title}</h1>
@@ -109,7 +100,10 @@ export default function BlogDetailPage() {
           alt={blog.title}
           className='w-full rounded-lg my-6'
         />
-        <p className='text-lg text-gray-700 leading-relaxed'>{blog.content}</p>
+        <div
+          dangerouslySetInnerHTML={{ __html: blog.content }}
+          className='text-lg text-gray-700 leading-relaxed prose'
+        ></div>
       </section>
     </section>
   );

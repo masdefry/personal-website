@@ -41,7 +41,7 @@ export const projects = [
     title: 'Kirei Wash',
     description:
       'A laundry ordering application that connects customers with outlets. Features include pick-up and delivery services, order recording, invoice generation for customers, and more.',
-    imageUrl: '/kirei-logo.png',
+    image: '/kirei-logo.png',
     alt: 'Kirei Wash Logo'
   },
   {
