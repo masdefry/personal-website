@@ -79,8 +79,8 @@ export default function BlogFormPage() {
         <div className='pt-10 pb-5'>
           <h2 className='text-3xl font-bold'>Create a New Post</h2>
           <p className='text-lg text-gray-500'>
-            "Share your thoughts and ideas with the world. Fill in the details
-            below to create and publish a new blog post!"
+            Share your thoughts and ideas with the world. Fill in the details
+            below to create and publish a new blog post!
           </p>
         </div>
         <form
