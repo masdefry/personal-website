@@ -11,6 +11,7 @@ type Post = {
   created: string;
   author: string;
   content: string;
+  description: string;
 };
 
 export default function BlogPage() {
@@ -83,18 +84,18 @@ export default function BlogPage() {
                 height={250}
                 className='w-full h-48 object-cover'
               />
-              <div className='p-5 flex flex-col flex-grow'>
-                <p className='text-sm text-gray-500'>
-                  {new Date(post.created).toLocaleDateString()} • {post.author}
-                </p>
-                <h2 className='text-xl font-semibold text-gray-800 mt-2'>
-                  {post.title}
-                </h2>
-                <div
-                  className='text-gray-600 mt-2 flex-grow prose'
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-                <button className='mt-4 text-blue-600 hover:underline'>
+              <div className='p-5 flex flex-col flex-grow justify-between'>
+                <div>
+                  <p className='text-sm text-gray-500'>
+                    {new Date(post.created).toLocaleDateString()} •{' '}
+                    {post.author}
+                  </p>
+                  <h2 className='text-xl font-semibold text-gray-800 mt-2 line-clamp-1'>
+                    {post.title}
+                  </h2>
+                  <p className='line-clamp-6 min-h-42 text-gray-600 py-3'>{post.description}</p>
+                </div>
+                <button className='mt-4 text-blue-600 hover:underline cursor-pointer'>
                   Read More →
                 </button>
               </div>

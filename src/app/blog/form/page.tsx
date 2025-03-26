@@ -27,6 +27,7 @@ interface FormValues {
   content: string;
   author: string;
   imageUrl: string;
+  description: string;
 }
 
 interface TiptapProps {
@@ -119,6 +120,7 @@ export default function BlogFormPage() {
       content: '',
       author: '',
       imageUrl: '',
+      description: ''
     },
     validationSchema: Yup.object({
       title: Yup.string()
@@ -131,6 +133,10 @@ export default function BlogFormPage() {
       imageUrl: Yup.string()
         .required('Image URL is required')
         .max(250, 'Max 250 characters'),
+      description: Yup.string()
+        .required('Description is required')
+        .min(250, 'Min 250 characters')
+        .max(500, 'Max 500 characters'),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -138,7 +144,7 @@ export default function BlogFormPage() {
         toast.success('Blog Successfully Created!');
         resetForm();
       } catch (error) {
-        console.log(error)
+        console.log(error);
         toast.error('Failed to Create Post.');
       }
     },
@@ -170,6 +176,19 @@ export default function BlogFormPage() {
             />
             {formik.touched.title && formik.errors.title && (
               <p className='text-red-500'>{formik.errors.title}</p>
+            )}
+          </div>
+
+          <div>
+            <label className='block font-medium text-gray-700'>Description</label>
+            <input
+              type='text'
+              placeholder='Ex. Lorem ipsum dolor sit amet'
+              className='w-full p-3 border rounded-xl'
+              {...formik.getFieldProps('description')}
+            />
+            {formik.touched.description && formik.errors.description && (
+              <p className='text-red-500'>{formik.errors.description}</p>
             )}
           </div>
 
