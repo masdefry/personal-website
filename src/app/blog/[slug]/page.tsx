@@ -28,8 +28,8 @@ export default function BlogDetailPage() {
       try {
         const response = await axios.get(`/api/posts/${slug}`);
         setBlog(response.data.data[0]);
-      } catch (err) {
-        setError('Failed to fetch blog post.');
+      } catch (err: any) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -95,11 +95,13 @@ export default function BlogDetailPage() {
           By <span className='font-semibold'>{blog.author}</span> •{' '}
           {formattedDate}
         </p>
-        <img
-          src={blog.imageUrl}
-          alt={blog.title}
-          className='w-full rounded-lg my-6'
-        />
+        <div className='relative w-full h-92 rounded-lg overflow-hidden pt-3 pb-6'>
+          <img
+            src={blog.imageUrl}
+            alt={blog.title}
+            className='object-cover w-full h-full rounded-lg'
+          />
+        </div>
         <div
           dangerouslySetInnerHTML={{ __html: blog.content }}
           className='text-lg text-gray-700 leading-relaxed prose'

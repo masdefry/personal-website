@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const getPosts = await Backendless.Data.of('Posts').find();
     

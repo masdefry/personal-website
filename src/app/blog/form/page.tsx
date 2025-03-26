@@ -3,7 +3,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Heading from '@tiptap/extension-heading';
@@ -22,8 +22,20 @@ import {
 import { useState } from 'react';
 import { PiArrowLeft } from 'react-icons/pi';
 
-const Tiptap = ({ onChange }: any) => {
-  const [headingLevel, setHeadingLevel] = useState(1);
+// Type definitions
+interface FormValues {
+  title: string;
+  content: string;
+  author: string;
+  imageUrl: string;
+}
+
+interface TiptapProps {
+  onChange: (value: string) => void;
+}
+
+const Tiptap: React.FC<TiptapProps> = ({ onChange }) => {
+  const [headingLevel, setHeadingLevel] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -45,7 +57,6 @@ const Tiptap = ({ onChange }: any) => {
       },
     },
     onUpdate: ({ editor }) => {
-      console.log('Editor Extensions:', editor.extensionManager.extensions);
       onChange(editor.getHTML());
     },
   });
@@ -55,7 +66,7 @@ const Tiptap = ({ onChange }: any) => {
   return (
     <div className='w-full py-2'>
       <div className='flex space-x-2 mb-2'>
-        <button className=''>
+        <button>
           <FaHeading />
         </button>
         <select
@@ -103,7 +114,7 @@ const Tiptap = ({ onChange }: any) => {
 };
 
 export default function BlogFormPage() {
-  const formik = useFormik({
+  const formik = useFormik<FormValues>({
     initialValues: {
       title: '',
       content: '',
@@ -111,20 +122,24 @@ export default function BlogFormPage() {
       imageUrl: '',
     },
     validationSchema: Yup.object({
-      title: Yup.string().required('Title is required').max(250, 'Max 250 characters'),
+      title: Yup.string()
+        .required('Title is required')
+        .max(250, 'Max 250 characters'),
       content: Yup.string().required('Content is required'),
       author: Yup.string()
         .email('Invalid email')
         .required('Author email is required'),
-      imageUrl: Yup.string().required('Image URL is required').max(250, 'Max 250 characters'),
+      imageUrl: Yup.string()
+        .required('Image URL is required')
+        .max(250, 'Max 250 characters'),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post('/api/posts', values);
-        console.log('Success:', response.data);
+        await axios.post('/api/posts', values);
         toast.success('Blog Successfully Created!');
         resetForm();
       } catch (error) {
+        console.log(error)
         toast.error('Failed to Create Post.');
       }
     },
@@ -162,9 +177,7 @@ export default function BlogFormPage() {
           <div>
             <label className='block font-medium text-gray-700'>Content</label>
             <Tiptap
-              onChange={(value: string) =>
-                formik.setFieldValue('content', value)
-              }
+              onChange={(value) => formik.setFieldValue('content', value)}
             />
             {formik.touched.content && formik.errors.content && (
               <p className='text-red-500'>{formik.errors.content}</p>
