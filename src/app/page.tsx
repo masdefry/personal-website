@@ -8,79 +8,12 @@ import { HiOutlinePhone } from 'react-icons/hi';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { PiArrowBendUpRight } from 'react-icons/pi';
 import { useEffect, useState } from 'react';
-
-const techStack = [
-  { src: '/next-logo.png', alt: 'Next.js' },
-  { src: '/react-logo.png', alt: 'React.js' },
-  { src: '/next-logo.png', alt: 'Next.js' },
-  { src: '/laravel-logo.png', alt: 'Laravel' },
-  { src: '/tailwindcss-logo.png', alt: 'Tailwind CSS' },
-  { src: '/mantineui-logo.png', alt: 'MantineUI CSS' },
-  { src: '/express-logo.png', alt: 'Express' },
-  { src: '/nest-logo.png', alt: 'Nest JS' },
-  { src: '/mysql-logo.png', alt: 'MySql' },
-  { src: '/postgree-logo.png', alt: 'Postgre Sql' },
-];
-
-const educationHistory = [
-  {
-    school: 'Purwadhika Schools',
-    degree: 'Web & Mobile Development',
-    year: '2021',
-    logo: '/pwd-logo.svg',
-  },
-  {
-    school: 'Telkom University',
-    degree: 'Electrical Engineering',
-    year: '2014-2019',
-    logo: '/telkom-logo.webp',
-  },
-  {
-    school: 'SMK Telkom Malang',
-    degree: 'Computer and Network Engineering',
-    year: '2011-2014',
-    logo: '/telkomschool-logo.png',
-  },
-];
-
-const projects = [
-  {
-    title: 'Kirei Wash',
-    description:
-      'A laundry ordering application that connects customers with outlets. Features include pick-up and delivery services, order recording, invoice generation for customers, and more.',
-    image: '/kirei-logo.png',
-  },
-  {
-    title: '82 Origin',
-    description:
-      'An online group website for Korean nationals living abroad. Features include functionalities similar to Facebook, such as creating posts, adding comments, and more.',
-    image: '/82origin-logo.webp',
-  },
-  {
-    title: 'Tetring',
-    description:
-      'An internal application for the PSE OP division of Yayasan Pendidikan Telkom. This web-based application is used to monitor employees tasks within the division.',
-    image: '/tetring-logo.webp',
-  },
-];
-
-const testimonials = [
-  {
-    name: 'Yusuf Fadilah',
-    position: 'Full Stack Engineer at Universitas Terbuka',
-    image: '/user.jpg',
-    message:
-      'Belajar web development adalah perjalanan yang menantang tapi juga sangat menarik. Dari awal memahami dasar-dasar HTML, CSS, dan JavaScript hingga membangun aplikasi dengan framework seperti React, NextJS atau ExpressJS, setiap tahap memberikan wawasan baru dan pengalaman berharga. Tantangan seperti debugging, memahami konsep backend-frontend, dan mengelola state dalam aplikasi modern membuat proses belajar semakin seru dan penuh eksplorasi.',
-  },
-  {
-    name: 'Immanuel Janis',
-    position: 'Developer Engineer at Integrasi Logistik Cipta Solusi',
-    image: '/testi-immanuel.jpg',
-    message: `Huhuhu selama diajar Pak Defryan, beliau itu gak hanya mengajar, tapi bisa membangun fondasi pemahaman yang kuat sekaligus bikin kelas jadi fun. Dengan pendekatan beliau yang sabar, dedikasi sekali dan detail, membawa saya menjadi bisa belajar bidang ilmu Web Development ini. Yang mulai sekarang sudah pede berkarir, bangun web app dari 0 dan menerapkan best practices di setiap aspek aplikasi.
-
-Yang paling berkesan adalah cara beliau menjelaskan konsep-konsep kompleks di dalam pemrograman web dengan analogi sederhana dan yang langsung 'nyambung'. Gak hanya teori doang, setiap materi selalu dibarengi real study case, code review bersama, dan tips best practice yang ternyata sangat berguna di dunia kerja.`,
-  },
-];
+import {
+  educationHistory,
+  projects,
+  techStack,
+  testimonials,
+} from '@/utils/data';
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -172,7 +105,7 @@ export default function Home() {
         {/* PROJECT SECTION */}
         <section
           id='projects'
-          className='px-10 md:px-32 bg-gray-100'
+          className='px-10 md:px-32'
         >
           <div className='container mx-auto px-6'>
             <div className='flex flex-col justify-center items-center'>
@@ -250,7 +183,7 @@ export default function Home() {
         {/* TESTI SECTION */}
         <section
           id='testimonials'
-          className='py-16 px-10 md:px-32 bg-gray-100'
+          className='mt-20 px-10 md:px-32 bg-gray-100'
         >
           <div className='text-center mb-12'>
             <h2 className='text-4xl italic text-black'>Alumni Success Story</h2>
@@ -305,7 +238,7 @@ export default function Home() {
         {/* EDUCATION SECTION */}
         <section
           id='education'
-          className='mt-10 md:mt-10 bg-gray-100'
+          className='mt-20'
         >
           <div className='container mx-auto px-10 md:px-32'>
             <div className='flex flex-col justify-center items-center'>
@@ -429,15 +362,13 @@ export default function Home() {
 
         {/* Submit Button */}
         <div className='col-span-3 flex justify-center py-3'>
-          <div className='px-1 py-1 bg-gray-300 w-34 rounded-full flex justify-between items-center border border-white hover:bg-white hover:text-black hover:border hover:border-black'>
-            <button className='btn bg-black text-white py-2 px-3 rounded-full'>
-              Submit
-            </button>
+          <button className='btn bg-black px-2 py-2 bg-gray-300 w-34 rounded-full flex justify-between items-center border border-white hover:bg-white hover:text-black hover:border hover:border-black'>
+            <p className='px-3'>Submit</p>
             <PiArrowBendUpRight
-              size={38}
+              size={28}
               className='p-2 bg-white rounded-full'
             />
-          </div>
+          </button>
         </div>
       </section>
     </div>

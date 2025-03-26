@@ -8,6 +8,7 @@ import { Menu } from 'lucide-react';
 export default function Navbar() {
   const [time, setTime] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -26,15 +27,41 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Fungsi untuk smooth scroll
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150); // Delay sebelum scroll agar efek lebih smooth
+    }
+  };
+
   return (
-    <nav className='px-10 text-black py-4 md:px-32 flex items-center justify-between'>
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 w-full px-10 py-4 md:px-32 flex items-center justify-between z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+      }`}
+    >
       <div className='flex items-center gap-10'>
         <div className='flex items-center gap-6'>
           <Link
             href='/'
-            className='text-2xl font-bold'
+            className='text-3xl font-bold'
           >
-            MyLogo
+            mdti.
           </Link>
           <div className='text-xs font-bold md:hidden'>
             <p className='text-gray-500'>Jakarta, Indonesia</p>
@@ -49,7 +76,7 @@ export default function Navbar() {
             About
           </Link>
           <Link
-            href='/'
+            href='/blog'
             className='hover:text-gray-400'
           >
             Blog
@@ -70,15 +97,15 @@ export default function Navbar() {
           {time}
         </div>
         <div className='flex items-center gap-3'>
-          <Link
-            href='/contact'
-            className='btn bg-black text-white py-2 px-3 rounded-xl hover:bg-white hover:text-black hover:border border-black'
+          <button
+            onClick={() => scrollToSection('contact')}
+            className='btn bg-black text-white py-2 px-3 rounded-xl hover:bg-white hover:text-black hover:border border-black transition-all duration-300'
           >
             Talk with me
-          </Link>
+          </button>
           <Link
             href='/contact'
-            className='btn bg-white text-black border border-black py-2 px-3 rounded-xl hover:bg-black hover:text-white'
+            className='btn bg-white text-black border border-black py-2 px-3 rounded-xl hover:bg-black hover:text-white transition-all duration-300'
           >
             See my work
           </Link>
@@ -112,6 +139,6 @@ export default function Navbar() {
           </Link>
         </motion.div>
       )}
-    </nav>
+    </motion.nav>
   );
 }
