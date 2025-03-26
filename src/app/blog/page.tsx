@@ -58,13 +58,13 @@ export default function BlogPage() {
             here.
           </Link>
         </p>
-        <div className='col-span-1 flex justify-between mt-5 md:mt-3 border border-gray-300 rounded-full flex items-center w-full md:w-fit'>
+        <div className='flex flex-row md:flex-row justify-between items-center gap-3 mt-5 md:mt-3 border border-gray-300 rounded-full w-full md:w-fit p-2'>
           <input
             type='text'
             placeholder='Enter your email'
-            className='px-3 focus:outline-none focus:ring-0 focus:border-transparent'
+            className='px-3 py-2 w-full md:w-auto flex-1 focus:outline-none focus:ring-0 focus:border-transparent'
           />
-          <button className='btn bg-black text-white rounded-full'>
+          <button className='btn bg-black text-white rounded-full px-4 py-2'>
             Subscribe Now →
           </button>
         </div>
@@ -93,7 +93,9 @@ export default function BlogPage() {
                   <h2 className='text-xl font-semibold text-gray-800 mt-2 line-clamp-1'>
                     {post.title}
                   </h2>
-                  <p className='line-clamp-6 min-h-42 text-gray-600 py-3'>{post.description}</p>
+                  <p className='line-clamp-6 min-h-42 text-gray-600 py-3'>
+                    {post.description}
+                  </p>
                 </div>
                 <button className='mt-4 text-blue-600 hover:underline cursor-pointer'>
                   Read More →

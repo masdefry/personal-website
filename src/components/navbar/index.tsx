@@ -124,21 +124,21 @@ export default function Navbar() {
             href='/'
             className='py-2 gap-3 flex items-center justify-end w-full px-10 hover:bg-gray-700'
           >
-            <p className='font-bold text-xl'>Home</p>
+            <p className='font-light text-xl'>Home</p>
             <HiOutlineHome  size={24} />
           </Link>
           <Link
             href='#'
             className='py-2 gap-3 flex items-center justify-end w-full px-10 hover:bg-gray-700'
           >
-            <p className='font-bold text-xl'>About</p>
+            <p className='font-light text-xl'>About</p>
             <HiOutlineInformationCircle size={24} />
           </Link>
           <Link
             href='/blog'
             className='py-2 gap-3 flex items-center justify-end w-full px-10 hover:bg-gray-700'
           >
-            <p className='font-bold text-xl'>Blog</p>
+            <p className='font-light text-xl'>Blog</p>
             <TbLogs size={24} />
           </Link>
         </motion.div>
