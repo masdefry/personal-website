@@ -125,7 +125,7 @@ export default function Home() {
                 >
                   <div className='relative w-full h-48 rounded-lg overflow-hidden'>
                     <Image
-                      src={project.image}
+                      src={project.image!}
                       alt={project.title}
                       fill
                       className='object-cover'
