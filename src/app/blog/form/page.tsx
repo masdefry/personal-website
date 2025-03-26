@@ -3,7 +3,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
-import { useEditor, EditorContent, Editor } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Heading from '@tiptap/extension-heading';
@@ -22,7 +22,6 @@ import {
 import { useState } from 'react';
 import { PiArrowLeft } from 'react-icons/pi';
 
-// Type definitions
 interface FormValues {
   title: string;
   content: string;

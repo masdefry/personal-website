@@ -28,16 +28,20 @@ export default function BlogDetailPage() {
       try {
         const response = await axios.get(`/api/posts/${slug}`);
         setBlog(response.data.data[0]);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || 'Something went wrong');
+        } else if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       } finally {
         setLoading(false);
       }
     };
 
-    if (slug) {
-      fetchBlogPost();
-    }
+    fetchBlogPost();
   }, [slug]);
 
   if (loading) {
