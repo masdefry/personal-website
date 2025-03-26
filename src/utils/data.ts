@@ -41,7 +41,7 @@ export const projects = [
     title: 'Kirei Wash',
     description:
       'A laundry ordering application that connects customers with outlets. Features include pick-up and delivery services, order recording, invoice generation for customers, and more.',
-    image: '/kirei-logo.png',
+    imageUrl: '/kirei-logo.png',
     alt: 'Kirei Wash Logo'
   },
   {
@@ -101,7 +101,7 @@ export const posts = [
 
       Next.js is the future of modern web development, providing a seamless experience for both developers and users.
     `,
-    image: '/nextjs-blog.jpg',
+    imageUrl: '/nextjs-blog.jpg',
     date: 'March 25, 2025',
     author: 'John Doe',
   },
@@ -128,7 +128,7 @@ export const posts = [
 
       Tailwind CSS is changing the way developers build modern UIs by providing a flexible and efficient approach to styling.
     `,
-    image: '/tailwindcss-blog.jpg',
+    imageUrl: '/tailwindcss-blog.jpg',
     date: 'March 20, 2025',
     author: 'Jane Smith',
   },
@@ -166,7 +166,7 @@ export const posts = [
       TypeScript is an essential tool for modern web development. By adding type safety and improving developer productivity, 
       TypeScript enables developers to build scalable and maintainable web applications with confidence.
     `,
-    image: '/typescript-blog.jpg',
+    imageUrl: '/typescript-blog.jpg',
     date: 'March 15, 2025',
     author: 'Alice Brown',
   },

@@ -12,7 +12,16 @@ export default function BlogDetailPage() {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter((segment) => segment);
 
-  const [blog, setBlog] = useState(null);
+  const [blog, setBlog] = useState<{
+    id: number;
+    slug: string;
+    title: string;
+    description: string;
+    content: string;
+    imageUrl: string;
+    date: string;
+    author: string;
+  } | null | undefined>(null);
 
   useEffect(() => {
     const foundBlog = posts.find((post) => post.slug === slug);
