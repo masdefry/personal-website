@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
+import { TbLogs } from 'react-icons/tb';
+import { HiOutlineInformationCircle, HiOutlineHome } from 'react-icons/hi2';
 
 export default function Navbar() {
   const [time, setTime] = useState('');
@@ -36,13 +38,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Fungsi untuk smooth scroll
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
       setTimeout(() => {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 150); // Delay sebelum scroll agar efek lebih smooth
+      }, 150);
     }
   };
 
@@ -121,21 +122,24 @@ export default function Navbar() {
         >
           <Link
             href='/'
-            className='py-2 w-full text-center hover:bg-gray-700'
+            className='py-2 gap-3 flex items-center justify-end w-full px-10 hover:bg-gray-700'
           >
-            Home
+            <p className='font-bold text-xl'>Home</p>
+            <HiOutlineHome  size={24} />
           </Link>
           <Link
-            href='/about'
-            className='py-2 w-full text-center hover:bg-gray-700'
+            href='#'
+            className='py-2 gap-3 flex items-center justify-end w-full px-10 hover:bg-gray-700'
           >
-            About
+            <p className='font-bold text-xl'>About</p>
+            <HiOutlineInformationCircle size={24} />
           </Link>
           <Link
-            href='/contact'
-            className='py-2 w-full text-center hover:bg-gray-700'
+            href='/blog'
+            className='py-2 gap-3 flex items-center justify-end w-full px-10 hover:bg-gray-700'
           >
-            Contact
+            <p className='font-bold text-xl'>Blog</p>
+            <TbLogs size={24} />
           </Link>
         </motion.div>
       )}
