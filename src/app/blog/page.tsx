@@ -44,7 +44,7 @@ export default function BlogPage() {
               className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all h-full flex flex-col'
             >
               <Image
-                src={post.image}
+                src={post.imageUrl}
                 alt={post.title}
                 width={400}
                 height={250}
