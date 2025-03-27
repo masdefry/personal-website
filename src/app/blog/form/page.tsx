@@ -114,13 +114,15 @@ const Tiptap: React.FC<TiptapProps> = ({ onChange }) => {
 };
 
 export default function BlogFormPage() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const formik = useFormik<FormValues>({
     initialValues: {
       title: '',
       content: '',
       author: '',
       imageUrl: '',
-      description: ''
+      description: '',
     },
     validationSchema: Yup.object({
       title: Yup.string()
@@ -140,12 +142,15 @@ export default function BlogFormPage() {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
+        setIsLoading(true);
         await axios.post('/api/posts', values);
         toast.success('Blog Successfully Created!');
         resetForm();
       } catch (error) {
         console.log(error);
         toast.error('Failed to Create Post.');
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -180,7 +185,9 @@ export default function BlogFormPage() {
           </div>
 
           <div>
-            <label className='block font-medium text-gray-700'>Description</label>
+            <label className='block font-medium text-gray-700'>
+              Description
+            </label>
             <input
               type='text'
               placeholder='Ex. Lorem ipsum dolor sit amet'
@@ -229,10 +236,11 @@ export default function BlogFormPage() {
           </div>
 
           <button
+            disabled={isLoading}
             type='submit'
             className='w-full bg-black text-white py-3 rounded-xl cursor-pointer'
           >
-            Post Blog
+            {isLoading ? 'Sending Data...' : 'Create Post'}
           </button>
         </form>
         <ToastContainer />
