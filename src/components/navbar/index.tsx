@@ -104,12 +104,12 @@ export default function Navbar() {
           >
             Talk with me
           </button>
-          <Link
-            href='/contact'
+          <button
+            onClick={() => scrollToSection('projects')}
             className='btn bg-white text-black border border-black py-2 px-3 rounded-xl hover:bg-black hover:text-white transition-all duration-300'
           >
             See my work
-          </Link>
+          </button>
         </div>
       </div>
 
