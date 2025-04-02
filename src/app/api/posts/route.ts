@@ -43,10 +43,30 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const getPosts = await Backendless.Data.of('Posts').find();
+    const url = new URL(req.url);
+    const category = url.searchParams.get('category');
+    const search = url.searchParams.get('search');
 
+    let query = '';
+
+    if (category) {
+      query += `category = '${category}'`;
+    }
+
+    if (search) {
+      if (query) query += ' AND ';
+      query += `(title LIKE '%${search}%' OR description LIKE '%${search}%')`;
+    }
+
+    const queryBuilder = Backendless.DataQueryBuilder.create();
+    if (query) {
+      queryBuilder.setWhereClause(query);
+    }
+
+    const getPosts = await Backendless.Data.of('Posts').find(queryBuilder);
+    console.log(getPosts)
     return NextResponse.json(
       { message: 'Get Posts Success', data: getPosts },
       { status: 200 }

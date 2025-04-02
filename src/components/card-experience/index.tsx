@@ -21,7 +21,7 @@ export default function CardExperience({
         </div>
       </div>
       <div>
-        <h1 className='text-lg font-bold'>{companyName}</h1>
+        <h1 className='text-lg font-bold text-black'>{companyName}</h1>
         <h1 className='text-sm text-gray-500'>
           {jobTitle}
         </h1>

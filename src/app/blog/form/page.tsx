@@ -49,7 +49,7 @@ const Tiptap: React.FC<TiptapProps> = ({ onChange }) => {
       OrderedList,
       ListItem,
     ],
-    content: '<p></p>',
+    content: '<p>Types content here...</p>',
     editorProps: {
       attributes: {
         class:
@@ -64,7 +64,7 @@ const Tiptap: React.FC<TiptapProps> = ({ onChange }) => {
   if (!editor) return null;
 
   return (
-    <div className='w-full py-2'>
+    <div className='w-full py-2 text-gray-700'>
       <div className='flex space-x-2 mb-2'>
         <button>
           <FaHeading />
@@ -107,7 +107,7 @@ const Tiptap: React.FC<TiptapProps> = ({ onChange }) => {
       </div>
       <EditorContent
         editor={editor}
-        className='prose prose-headings:text-4xl prose-ul:list-disc prose-ol:list-decimal prose-li:ml-4'
+        className='text-gray-700 prose prose-headings:text-4xl prose-ul:list-disc prose-ol:list-decimal prose-li:ml-4 h-60 overflow-y-auto'
       />
     </div>
   );
@@ -156,7 +156,7 @@ export default function BlogFormPage() {
   });
 
   return (
-    <section className='container mx-auto px-10 md:px-32 py-24'>
+    <section className='container mx-auto px-10 md:px-32 py-24 bg-white'>
       {/* BACK BUTTON SECTION */}
       <button
         onClick={() => window.history.back()}
@@ -166,7 +166,7 @@ export default function BlogFormPage() {
       </button>
 
       <section className='mt-10'>
-        <h2 className='text-3xl font-bold'>Create a New Post</h2>
+        <h2 className='text-3xl font-bold text-black'>Create a New Post</h2>
         <form
           onSubmit={formik.handleSubmit}
           className='space-y-6 mt-10'
@@ -176,7 +176,7 @@ export default function BlogFormPage() {
             <input
               placeholder='Ex. Mastering TypeScript for Modern Web Apps'
               type='text'
-              className='w-full p-3 border rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl'
               {...formik.getFieldProps('title')}
             />
             {formik.touched.title && formik.errors.title && (
@@ -191,7 +191,7 @@ export default function BlogFormPage() {
             <input
               type='text'
               placeholder='Ex. Lorem ipsum dolor sit amet'
-              className='w-full p-3 border rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl'
               {...formik.getFieldProps('description')}
             />
             {formik.touched.description && formik.errors.description && (
@@ -201,9 +201,11 @@ export default function BlogFormPage() {
 
           <div>
             <label className='block font-medium text-gray-700'>Content</label>
+            <div className='border border-gray-400 rounded-xl px-2'>
             <Tiptap
               onChange={(value) => formik.setFieldValue('content', value)}
             />
+            </div>
             {formik.touched.content && formik.errors.content && (
               <p className='text-red-500'>{formik.errors.content}</p>
             )}
@@ -214,7 +216,7 @@ export default function BlogFormPage() {
             <input
               type='text'
               placeholder='Ex. defryan@gmail.com'
-              className='w-full p-3 border rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl'
               {...formik.getFieldProps('author')}
             />
             {formik.touched.author && formik.errors.author && (
@@ -227,7 +229,7 @@ export default function BlogFormPage() {
             <input
               type='text'
               placeholder='Ex. https://example.com/image.jpg'
-              className='w-full p-3 border rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl'
               {...formik.getFieldProps('imageUrl')}
             />
             {formik.touched.imageUrl && formik.errors.imageUrl && (

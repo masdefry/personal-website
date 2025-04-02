@@ -11,7 +11,7 @@ export default function CardAward({
         <LiaAwardSolid className='text-3xl text-yellow-500' />
       </div>
       <div>
-        <h1 className='text-lg font-bold'>{title}</h1>
+        <h1 className='text-lg font-bold text-black'>{title}</h1>
         <h1 className='text-sm text-gray-500'>{description} - {year}</h1>
       </div>
     </div>

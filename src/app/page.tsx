@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
   return (
     <div>
-      <div className='px-10 grid grid-cols-1 md:grid-cols-2 md:px-32 py-10 h-screen md:h-[80vh]'>
+      <div className='px-10 grid grid-cols-1 md:grid-cols-2 md:px-32 py-10 h-screen md:h-[80vh] bg-white text-black'>
         {/* BANNER SECTION */}
         <div className='col-span-1 flex flex-col justify-center items-start'>
           <div className='bg-black px-10 py-10 rounded-full'></div>
@@ -65,7 +65,7 @@ export default function Home() {
           className='px-10 md:px-32 py-10 md:py-20 grid grid-cols-1 md:grid-cols-2'
         >
           <div className='col-span-1'>
-            <h1 className='text-4xl'>Working Experience</h1>
+            <h1 className='text-4xl text-black'>Working Experience</h1>
             <div className='py-10 flex flex-col gap-10'>
               <CardExperience
                 companyName='Purwadhika Kirana Nusantara'
@@ -91,7 +91,7 @@ export default function Home() {
             </div>
           </div>
           <div className='col-span-1'>
-            <h1 className='text-4xl'>Awards & Recognition</h1>
+            <h1 className='text-4xl text-black'>Awards & Recognition</h1>
             <div className='py-10 flex flex-col gap-10'>
               <CardAward
                 title='Best Web Development Lecturer'
@@ -109,8 +109,8 @@ export default function Home() {
         >
           <div className='container mx-auto px-6'>
             <div className='flex flex-col justify-center items-center'>
-              <h1 className='text-4xl italic'>My Latest</h1>
-              <h1 className='text-4xl font-bold'>Project</h1>
+              <h1 className='text-4xl italic text-black'>My Latest</h1>
+              <h1 className='text-4xl font-bold text-black'>Project</h1>
             </div>
 
             <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10'>
@@ -147,8 +147,8 @@ export default function Home() {
           className='px-10 md:px-32 mt-10 md:mt-20'
         >
           <div className='flex flex-col justify-center items-center'>
-            <h1 className='text-4xl italic'>Exploring Tech Stack</h1>
-            <h1 className='text-4xl font-bold'>Behind My Project</h1>
+            <h1 className='text-4xl italic text-black'>Exploring Tech Stack</h1>
+            <h1 className='text-4xl font-bold text-black'>Behind My Project</h1>
           </div>
           <div className='relative overflow-hidden w-full py-6 bg-gray-100 mt-2'>
             <motion.div
@@ -187,7 +187,7 @@ export default function Home() {
         >
           <div className='text-center mb-12'>
             <h2 className='text-4xl italic text-black'>Alumni Success Story</h2>
-            <h1 className='text-4xl font-bold'>Hear From My Students</h1>
+            <h1 className='text-4xl font-bold text-black'>Hear From My Students</h1>
           </div>
 
           <div className='relative w-full max-w-xl mx-auto'>
@@ -242,8 +242,8 @@ export default function Home() {
         >
           <div className='container mx-auto px-10 md:px-32'>
             <div className='flex flex-col justify-center items-center'>
-              <h1 className='text-4xl italic'>My Academic</h1>
-              <h1 className='text-4xl font-bold'>Journey</h1>
+              <h1 className='text-4xl italic text-black'>My Academic</h1>
+              <h1 className='text-4xl font-bold text-black'>Journey</h1>
             </div>
 
             <div className='grid md:grid-cols-3 gap-6 py-10'>
@@ -281,16 +281,16 @@ export default function Home() {
       {/* CONTACT SECTION */}
       <section
         id='contact'
-        className='px-6 md:px-16 lg:px-32 py-10'
+        className='px-6 md:px-16 lg:px-32 py-10 bg-white'
       >
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-10'>
           {/* Contact Info */}
           <div className='col-span-1'>
-            <h1 className='text-2xl font-bold text-gray-800'>Contact Us!</h1>
+            <h1 className='text-2xl font-bold text-gray-900'>Contact Us!</h1>
             <h1 className='text-4xl mt-3 italic text-gray-900'>
               Lets Talk for
             </h1>
-            <h1 className='text-4xl font-bold'>Your Next Project!</h1>
+            <h1 className='text-4xl font-bold text-gray-900'>Your Next Project!</h1>
 
             <div className='flex flex-col gap-5 py-10'>
               <div className='flex items-center gap-5'>

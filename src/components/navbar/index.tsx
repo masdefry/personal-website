@@ -6,12 +6,14 @@ import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { TbLogs } from 'react-icons/tb';
 import { HiOutlineInformationCircle, HiOutlineHome } from 'react-icons/hi2';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [time, setTime] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const pathUrl = usePathname()
+  
   useEffect(() => {
     const updateTime = () => {
       const now = new Date().toLocaleString('en-US', {
@@ -56,7 +58,7 @@ export default function Navbar() {
         isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
       }`}
     >
-      <div className='flex items-center gap-10'>
+      <div className='flex items-center gap-10 text-black'>
         <div className='flex items-center gap-6'>
           <Link
             href='/'
@@ -95,22 +97,27 @@ export default function Navbar() {
       <div className='hidden md:flex items-center gap-10 font-bold text-sm'>
         <div className='text-xs font-bold'>
           <p className='text-gray-500'>Jakarta, Indonesia</p>
-          {time}
+          <p className='text-gray-700'>{time}</p>
         </div>
-        <div className='flex items-center gap-3'>
-          <button
-            onClick={() => scrollToSection('contact')}
-            className='btn bg-black text-white py-2 px-3 rounded-xl hover:bg-white hover:text-black hover:border border-black transition-all duration-300'
-          >
-            Talk with me
-          </button>
-          <button
-            onClick={() => scrollToSection('projects')}
-            className='btn bg-white text-black border border-black py-2 px-3 rounded-xl hover:bg-black hover:text-white transition-all duration-300'
-          >
-            See my work
-          </button>
-        </div>
+        {
+          pathUrl === '/'?
+            <div className='flex items-center gap-3'>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className='btn bg-black text-white py-2 px-3 rounded-xl hover:bg-white hover:text-black hover:border border-black transition-all duration-300'
+              >
+                Talk with me
+              </button>
+              <button
+                onClick={() => scrollToSection('projects')}
+                className='btn bg-white text-black border border-black py-2 px-3 rounded-xl hover:bg-black hover:text-white transition-all duration-300'
+              >
+                See my work
+              </button>
+            </div>
+          :
+            <></>
+        }
       </div>
 
       {isOpen && (

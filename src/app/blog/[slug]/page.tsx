@@ -46,7 +46,7 @@ export default function BlogDetailPage() {
 
   if (loading) {
     return (
-      <section className='container min-h-screen flex flex-col justify-center items-center'>
+      <section className='container min-h-screen flex flex-col justify-center items-center bg-white'>
         <div className='w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin'></div>
       </section>
     );
@@ -54,18 +54,18 @@ export default function BlogDetailPage() {
 
   if (error || !blog) {
     return (
-      <section className='container min-h-screen flex flex-col justify-center mx-auto px-10 md:px-32 py-24 text-center'>
-        <h2 className='text-2xl font-bold'>Blog not found</h2>
+      <section className='container min-h-screen flex flex-col justify-center mx-auto px-10 md:px-32 py-24 text-center bg-white'>
+        <h2 className='text-2xl font-bold text-black'>Blog not found</h2>
         <p className='text-gray-500'>
           The blog you are looking for does not exist.
         </p>
         <Link href='/blog'>
           <div className='col-span-3 flex justify-center py-3'>
-            <button className='btn bg-black px-2 py-2 bg-gray-300 w-34 rounded-full flex justify-between items-center border border-white hover:bg-white hover:text-black hover:border hover:border-black'>
+            <button className='btn px-2 py-2 bg-gray-900 text-white w-34 rounded-full flex justify-between items-center border border-white hover:bg-white hover:text-black hover:border hover:border-black'>
               <p className='px-3'>Go back</p>
               <PiArrowLeft
                 size={28}
-                className='p-2 bg-white rounded-full text-bold'
+                className='p-2 bg-white rounded-full text-bold text-black'
               />
             </button>
           </div>
@@ -94,7 +94,7 @@ export default function BlogDetailPage() {
 
       {/* BLOG DETAIL SECTION */}
       <section className='min-h-screen'>
-        <h1 className='text-4xl font-bold mb-4'>{blog.title}</h1>
+        <h1 className='text-4xl font-bold mb-4 text-black'>{blog.title}</h1>
         <p className='text-gray-500 text-sm'>
           By <span className='font-semibold'>{blog.author}</span> •{' '}
           {formattedDate}
