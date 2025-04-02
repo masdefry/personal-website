@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { PiArrowLeft } from 'react-icons/pi';
@@ -18,7 +18,7 @@ type Post = {
   description: string;
 };
 
-export default function BlogPage() {
+function BlogContent() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -205,5 +205,13 @@ export default function BlogPage() {
         )}
       </section>
     </section>
+  );
+}
+
+export default function BlogPage() {
+  return (
+    <Suspense fallback={<div></div>}>
+      <BlogContent />
+    </Suspense>
   );
 }
