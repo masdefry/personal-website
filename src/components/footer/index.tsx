@@ -17,30 +17,12 @@ export default function Footer() {
 
           {/* Navigasi */}
           <div className='flex space-x-6'>
-            <a
-              href='#about'
-              className='hover:text-white transition'
-            >
-              About
-            </a>
-            <a
-              href='#projects'
-              className='hover:text-white transition'
-            >
-              Projects
-            </a>
-            <a
-              href='#contact'
-              className='hover:text-white transition'
-            >
-              Contact
-            </a>
           </div>
 
           {/* Social Media */}
           <div className='flex space-x-4 mt-4 md:mt-0'>
             <a
-              href='https://github.com/yourgithub'
+              href='https://github.com/masdefry'
               target='_blank'
               rel='noopener noreferrer'
               className='text-xl hover:text-white transition'
