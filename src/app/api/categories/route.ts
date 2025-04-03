@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Backendless from '../../../lib/backendless';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const getCategories = await Backendless.Data.of('Categories').find();
 
