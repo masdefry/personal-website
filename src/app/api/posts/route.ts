@@ -52,7 +52,7 @@ export async function GET(req: Request) {
     let query = '';
 
     if (category) {
-      query += `category = '${category}'`;
+      query += `categoryName = '${category}'`;
     }
 
     if (search) {

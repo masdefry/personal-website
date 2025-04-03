@@ -18,12 +18,19 @@ type Post = {
   description: string;
 };
 
+type Category = {
+  objectId: string;
+  name: string;
+}
+
 function BlogContent() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingFilter, setLoadingFilter] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [searchInput, setSearchInput] = useState<string | null>(null);
   const router = useRouter() 
   const searchParams = useSearchParams();
@@ -31,13 +38,9 @@ function BlogContent() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        setLoading(true)
         const response = await axios.get<{ data: Post[] }>(`/api/posts?${searchParams.toString()}`); 
-        console.log(response)
         setPosts(response.data.data);
       } catch (err: unknown) {
-        console.log('>>>')
-        console.log(err)
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || 'Something went wrong');
         } else if (err instanceof Error) {
@@ -47,34 +50,59 @@ function BlogContent() {
         }
       } finally {
         setLoading(false);
+        setLoadingFilter(false);
       }
     };
 
     fetchPosts();
   }, [searchParams]);
 
-  const handleFilterCategory = (category: string) => {
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get<{ data: Category[] }>(`/api/categories`); 
+        setCategories(response.data.data);
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || 'Something went wrong');
+        } else if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+      } finally {
+        setLoading(false);
+        setLoadingFilter(false);
+      }
+    };
+
+    fetchCategories()
+  }, [])
+
+  const handleFilterCategory = (category: Category) => {
     const params = new URLSearchParams(searchParams.toString());
-    const newCategory = selectedCategory === category ? null : category;
+    const newCategory = selectedCategory?.name === category.name ? null : category;
     setSelectedCategory(newCategory);
     if(category){
-        params.set('category', category);
+      params.set('category', category.name);
     }else{
-        params.delete('category')
+      params.delete('category')
     }
     router.push(`?${params.toString()}`, { scroll: false });
+    setLoadingFilter(true);
   };
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
-
+    
     if(searchInput){
       params.set('search', searchInput);
     }else{
-        params.delete('searchInput')
+      params.delete('searchInput')
     }
-    setSearchInput('')
     router.push(`?${params.toString()}`, { scroll: false });
+    setSearchInput('')
+    setLoadingFilter(true);
   }
 
   const handleResertFilter = () => {
@@ -136,17 +164,17 @@ function BlogContent() {
         >
           <fieldset className='fieldset p-4 bg-white text-black border border-gray-300 rounded-box'>
             <legend className='fieldset-legend text-black p-3'>Category Options</legend>
-            {['Programming', 'Design', 'Digital Marketing', 'Data'].map((category) => (
-              <label key={category} className='fieldset-label text-black'>
+            {categories.map((category) => (
+              <label key={category.objectId} className='fieldset-label text-black'>
                 <input
                   type='radio'
                   name='category'
-                  value={category}
-                  checked={selectedCategory === category}
+                  value={category?.objectId}
+                  checked={selectedCategory?.objectId === category?.objectId}
                   onChange={() => handleFilterCategory(category)}
                   className='radio text-black border border-gray-300'
                 />
-                {category}
+                {category?.name}
               </label>
             ))}
           </fieldset>
@@ -170,7 +198,11 @@ function BlogContent() {
               </div>
             </Link>
           </section>
-        ) : (
+        ) : loadingFilter?
+          <div className={`col-span-5 ${showFilter ? 'lg:col-span-4' : 'lg:col-span-5'} flex justify-center items-center min-h-3 bg-white`}>
+            <div className='w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin'></div>
+          </div>
+        : (
           <section className={`col-span-5 ${showFilter ? 'lg:col-span-4' : 'lg:col-span-5'} grid gap-8 mt-10 p-4 md:mt-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}>
             {posts.map((post) => (
               <div key={post.objectId} className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all h-fit flex flex-col'>
