@@ -12,7 +12,7 @@ function generateSlug(title: string) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { title, content, author, imageUrl, description } = await req.json();
+    const { title, content, author, imageUrl, description, category } = await req.json();
     const slug = generateSlug(title);
     await Backendless.Data.of('Posts').save({
       title,
@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
       imageUrl,
       description,
       slug,
+      categoryName: category
     });
     return NextResponse.json(
       {
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { message: 'Create Post Failed', error },
       { status: 500 }

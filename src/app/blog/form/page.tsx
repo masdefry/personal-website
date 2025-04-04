@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import { useEditor, EditorContent } from '@tiptap/react';
@@ -28,10 +29,16 @@ interface FormValues {
   author: string;
   imageUrl: string;
   description: string;
+  category: string;
 }
 
 interface TiptapProps {
   onChange: (value: string) => void;
+}
+
+type Category = {
+  objectId: string;
+  name: string;
 }
 
 const Tiptap: React.FC<TiptapProps> = ({ onChange }) => {
@@ -115,6 +122,20 @@ const Tiptap: React.FC<TiptapProps> = ({ onChange }) => {
 
 export default function BlogFormPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get<{ data: Category[] }>(`/api/categories`); 
+        setCategories(response.data.data);
+      } catch (err: unknown) {
+        console.log(err)
+      }
+    };
+
+    fetchCategories()
+  }, [])
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -123,6 +144,7 @@ export default function BlogFormPage() {
       author: '',
       imageUrl: '',
       description: '',
+      category: ''
     },
     validationSchema: Yup.object({
       title: Yup.string()
@@ -139,6 +161,7 @@ export default function BlogFormPage() {
         .required('Description is required')
         .min(250, 'Min 250 characters')
         .max(500, 'Max 500 characters'),
+      category: Yup.string().required('Category is required'),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -176,7 +199,7 @@ export default function BlogFormPage() {
             <input
               placeholder='Ex. Mastering TypeScript for Modern Web Apps'
               type='text'
-              className='w-full p-3 border border-gray-400 rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl text-black'
               {...formik.getFieldProps('title')}
             />
             {formik.touched.title && formik.errors.title && (
@@ -191,11 +214,29 @@ export default function BlogFormPage() {
             <input
               type='text'
               placeholder='Ex. Lorem ipsum dolor sit amet'
-              className='w-full p-3 border border-gray-400 rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl text-black'
               {...formik.getFieldProps('description')}
             />
             {formik.touched.description && formik.errors.description && (
               <p className='text-red-500'>{formik.errors.description}</p>
+            )}
+          </div>
+
+          <div>
+            <label className='block font-medium text-gray-700'>Category</label>
+            <select
+              className='w-full p-3 border border-gray-400 rounded-xl text-black'
+              {...formik.getFieldProps('category')}
+            >
+              <option value='' label='Select Category' />
+              {categories.map((category: Category) => (
+                <option key={category.objectId} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            {formik.touched.category && formik.errors.category && (
+              <p className='text-red-500'>{formik.errors.category}</p>
             )}
           </div>
 
@@ -216,7 +257,7 @@ export default function BlogFormPage() {
             <input
               type='text'
               placeholder='Ex. defryan@gmail.com'
-              className='w-full p-3 border border-gray-400 rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl text-black'
               {...formik.getFieldProps('author')}
             />
             {formik.touched.author && formik.errors.author && (
@@ -229,7 +270,7 @@ export default function BlogFormPage() {
             <input
               type='text'
               placeholder='Ex. https://example.com/image.jpg'
-              className='w-full p-3 border border-gray-400 rounded-xl'
+              className='w-full p-3 border border-gray-400 rounded-xl text-black'
               {...formik.getFieldProps('imageUrl')}
             />
             {formik.touched.imageUrl && formik.errors.imageUrl && (

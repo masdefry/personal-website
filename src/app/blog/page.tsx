@@ -142,7 +142,7 @@ function BlogContent() {
             <div className='flex flex-row items-center gap-3 border border-gray-300 rounded-full w-full'>
             <input
               type='text'
-              placeholder='Search any post here'
+              placeholder='Search with Article Title or Description'
               className='text-black px-3 w-full focus:outline-none'
               value={searchInput || ''}
               onChange={(e) => setSearchInput(e.target.value)}
