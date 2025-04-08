@@ -7,7 +7,6 @@ export default function Footer() {
     <footer className='bg-black text-gray-300 py-8'>
       <div className='container mx-auto px-6'>
         <div className='flex flex-col md:flex-row justify-between items-center text-center md:text-left'>
-          {/* Nama & Hak Cipta */}
           <div className='mb-4 md:mb-0'>
             <h2 className='text-lg font-semibold'>Defryan</h2>
             <p className='text-sm'>
@@ -15,11 +14,8 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navigasi */}
-          <div className='flex space-x-6'>
-          </div>
+          <div className='flex space-x-6'></div>
 
-          {/* Social Media */}
           <div className='flex space-x-4 mt-4 md:mt-0'>
             <a
               href='https://github.com/masdefry'
@@ -30,20 +26,12 @@ export default function Footer() {
               <FaGithub />
             </a>
             <a
-              href='https://linkedin.com/in/yourlinkedin'
+              href='https://www.linkedin.com/in/ryan-defryan/'
               target='_blank'
               rel='noopener noreferrer'
               className='text-xl hover:text-white transition'
             >
               <FaLinkedin />
-            </a>
-            <a
-              href='https://twitter.com/yourtwitter'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-xl hover:text-white transition'
-            >
-              <FaTwitter />
             </a>
           </div>
         </div>
